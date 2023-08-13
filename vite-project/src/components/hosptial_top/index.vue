@@ -19,7 +19,7 @@ import { useRouter } from 'vue-router';
 let $router =useRouter()
 
 const goHome=()=>{
-   $router.push({path:'home'})
+   $router.push({path:'/home'})
 }
 </script>
 

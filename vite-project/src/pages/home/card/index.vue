@@ -1,7 +1,7 @@
 <template>
 
 
-<el-card class="box-card" shadow="hover" @click="handleSelect">
+<el-card class="box-card" shadow="hover" @click="goDetail">
      <div class="content">
       <div class="left">
         
@@ -26,14 +26,17 @@
 </template>
 
 <script setup lang="ts">
- defineProps(['hasHosptialInfo'])
+let props = defineProps(['hasHosptialInfo'])
  import { useRouter } from 'vue-router';
 
  let $router =useRouter()
 
-//点击搜索框下拉菜单然后路由跳转详情页
-const handleSelect = () => {
-  $router.push({path:'hosptial'})
+//点击卡片跳转医院详情页
+const goDetail = () => {
+  
+  $router.push({path:'/hosptial/register',query:{hoscode:props.hasHosptialInfo.hoscode}})
+
+  
 }
 </script>
 

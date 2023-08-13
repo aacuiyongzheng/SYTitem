@@ -6,6 +6,7 @@ import 'element-plus/dist/index.css'
 import HosptialTop from '@/components/hosptial_top/index.vue'
 import HosptialTottom from '@/components/hosptial_bottom/index.vue'
 import router from '@/router'
+import pinia from '@/store/index'
 //@ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
@@ -20,6 +21,7 @@ app.use(ElementPlus, {
 })
 app.use(ElementPlus)
 app.use(router)
+app.use(pinia)
 
 app.mount('#app')
 

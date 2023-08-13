@@ -47,7 +47,15 @@
 </template>
 
 <script setup lang="ts">
+import {onMounted} from 'vue'
+import useDetailStore from '@/store/modules/hosptialDetail.ts'
+import { useRoute } from 'vue-router';
+let detailStore=useDetailStore()
+let $route =useRoute()
 
+onMounted(()=>{
+  detailStore.getHosptial($route.query.hoscode)
+})
 </script>
 
 <style scoped lang="scss">
