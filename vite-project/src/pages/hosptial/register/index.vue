@@ -57,7 +57,7 @@
             <div class="right" v-for="(keshi,index) in hosptialStore.hosptialDepartmentInfo" :key="keshi.depcode">
               <h1 class="cur">{{keshi.depname}}</h1>
               <ul> 
-               <li v-for="(item)  in keshi.children">{{item.depname}}</li>
+               <li @click="changeScrene" v-for="(item)  in keshi.children">{{item.depname}}</li>
               </ul>
          </div>
          </div>
@@ -66,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+import useUserStore from '@/store/modules/user.ts'
+let userStore=useUserStore()
 import useDetailStore from '@/store/modules/hosptialDetail.ts'
 import {ref} from 'vue'
 let activeIndex =ref<number>(0)
@@ -81,6 +83,11 @@ const changeActive=(index:any)=>{
       behavior:'smooth',//过渡动画
       block:'start'     //起始位置
    });
+}
+
+//显示注册页面
+const changeScrene=()=>{
+   userStore.dialogFlag=true
 }
 </script>
 

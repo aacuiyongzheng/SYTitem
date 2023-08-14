@@ -8,7 +8,7 @@
                
                <div class="right">
                   <p>帮助中心</p>
-                  <p>登录/注册</p>
+                  <p @click="changeScrene">登录/注册</p>
                </div>
             </div>
          </div>
@@ -16,10 +16,16 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import useUserStore from '@/store/modules/user.ts'
+let userStore=useUserStore()
 let $router =useRouter()
 
 const goHome=()=>{
    $router.push({path:'/home'})
+}
+
+const changeScrene=()=>{
+   userStore.dialogFlag =true
 }
 </script>
 

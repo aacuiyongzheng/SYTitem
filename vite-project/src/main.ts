@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import HosptialTop from '@/components/hosptial_top/index.vue'
 import HosptialTottom from '@/components/hosptial_bottom/index.vue'
+import Login from '@/components/login/index.vue'
 import router from '@/router'
 import pinia from '@/store/index'
 //@ts-ignore
@@ -16,6 +17,7 @@ const app =createApp(App)
 
 app.component('HosptialTop',HosptialTop)
 app.component('HosptialTottom',HosptialTottom)
+app.component('Login',Login)
 app.use(ElementPlus, {
   locale: zhCn,
 })

@@ -7,6 +7,8 @@
     </div>
 
     <HosptialTottom/>
+
+    <Login/>
   </div>
 </template>
 
