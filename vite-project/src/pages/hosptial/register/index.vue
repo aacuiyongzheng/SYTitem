@@ -45,12 +45,43 @@
 
          </div>
       </div>
+
+      <div class="keshi">
+         <div class="left">
+            <ul>
+               <li @click="changeActive(index)" :class="{active:activeIndex==index}" v-for="(item,index) in hosptialStore.hosptialDepartmentInfo" :key="item.depcode">{{item.depname}}</li>
+            </ul>
+         </div>
+
+         <div class="department">
+            <div class="right" v-for="(keshi,index) in hosptialStore.hosptialDepartmentInfo" :key="keshi.depcode">
+              <h1 class="cur">{{keshi.depname}}</h1>
+              <ul> 
+               <li v-for="(item)  in keshi.children">{{item.depname}}</li>
+              </ul>
+         </div>
+         </div>
+      </div>
    </div>
 </template>
 
 <script setup lang="ts">
 import useDetailStore from '@/store/modules/hosptialDetail.ts'
+import {ref} from 'vue'
+let activeIndex =ref<number>(0)
 let hosptialStore=useDetailStore()
+
+
+const changeActive=(index:any)=>{
+   activeIndex.value=index
+
+   let allH1 =document.querySelectorAll('.cur')
+   //点击侧边栏 右边出现相对应科室的位置
+   allH1[activeIndex.value].scrollIntoView({
+      behavior:'smooth',//过渡动画
+      block:'start'     //起始位置
+   });
+}
 </script>
 
 <style scoped lang="scss">
@@ -105,6 +136,68 @@ let hosptialStore=useDetailStore()
          .time,.address,.route,.stopTime,.ruleInfo{
             margin-top: 6px;
         
+         }
+      }
+   }
+
+   .keshi{
+      margin-top: 40px;
+      width: 100%;
+      height: 500px;
+      display: flex;
+
+      .left{
+         width: 80px;
+         
+         ul{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(248, 248, 248);
+      
+
+            li{
+               padding-top: 15px;
+               font-size: 12px;
+               flex: 1;
+               text-align: center;
+               color: #7f7f7f;
+               font-size: 12px;
+
+               &.active{
+                  border-left: 1px solid red;
+                  background-color: white;
+                  color: red;
+               }
+            }
+         }
+      }
+
+      .department{   
+         flex: 1;
+         margin-left: 13px;
+         overflow: auto;
+         &::-webkit-scrollbar{
+            display: none;
+         }
+            .right{
+               h1{
+                  height: 20px;
+                  line-height: 20px;
+                  color: #7f7f7f;
+                  background-color: rgb(248, 248, 248);
+               }
+
+               ul{
+                  display: flex;
+                  flex-wrap: wrap;
+               }
+
+               li{
+                  width: 30%;
+                  margin: 10px;
+               }
          }
       }
    }
