@@ -15,7 +15,7 @@ watch(()=>props.isShow,()=>{
    let timer =setInterval(()=>{
         time.value--
         if(time.value ==0){
-            $emit('getFlag',false)
+            $emit('getFlag',true)
             clearInterval(timer)
           
         }

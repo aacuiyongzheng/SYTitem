@@ -8,17 +8,21 @@
       
           <div v-show="screne==0" class="login">
 
-            <el-form>
-        <el-form-item label="">
+            <el-form
+            ref="ruleFormRef"
+    :model="loginParams"
+    :rules="rules"
+            >
+        <el-form-item label="" prop="phone">
           <el-input :prefix-icon="User" v-model="loginParams.phone" placeholder="请你输入收集号码"></el-input>
         </el-form-item>
 
-        <el-form-item label="">
-          <el-input :prefix-icon="Lock" placeholder="请你输入手机验证码" v-model="userStore.code"></el-input>
+        <el-form-item label="" prop="code">
+          <el-input :prefix-icon="Lock" placeholder="请你输入手机验证码" v-model="loginParams.code"></el-input>
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary"   :disabled="!isPhone||btnShow?true:false">
+          <el-button type="primary"   :disabled="!isPhone||!btnShow?true:false">
           
             
             <span v-if="btnShow" :isShow="btnShow" @click="gerRcode"  >获取验证码</span>
@@ -31,7 +35,7 @@
 
 
           <el-form-item label="">
-          <el-button style="width: 100%;" type="primary">用户登录</el-button>
+          <el-button style="width: 100%;" type="primary" @click="userLogin">用户登录</el-button>
         </el-form-item>
 
         <div @click="changeScrene">
@@ -84,7 +88,7 @@
 
   <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="dialogFormVisible = false">关闭窗口</el-button>
+        <el-button type="primary" @click="close">关闭窗口</el-button>
       </span>
     </template>
   </el-dialog>
@@ -95,11 +99,14 @@
 import Countdown from '@/components/countdown/index.vue'
 import {ref,reactive,computed} from 'vue'
 import useUserStore from '@/store/modules/user.ts'
+import { ElMessage } from 'element-plus';
 let userStore=useUserStore()
 let screne =ref<number>(0)
 let loginParams =reactive<any>({
-  phone:''
+  phone:'',
+  code:''
 })
+let ruleFormRef=ref<any>()
 let btnShow =ref<boolean>(true)
 //改变登录方式  手机登录 和微信支付
 const changeScrene=()=>{
@@ -107,16 +114,38 @@ const changeScrene=()=>{
 }
 
 //获取验证码
-const gerRcode=()=>{
-  
+const gerRcode=async()=>{
+    if(!isPhone.value||!btnShow.value) return ;
 
-  userStore.getRcode(loginParams.phone)
+  try {
+  await  userStore.getRcode(loginParams.phone)
+  loginParams.code =userStore.code
   btnShow.value=false
+  } catch (error) {
+    
+  }
+  
+}
+
+//用户登录
+const userLogin=async()=>{
+ await ruleFormRef.value.validate()
+  try {
+   await userStore.userLogin(loginParams)
+   userStore.dialogFlag=false
+   
+  } catch (error) {
+    ElMessage({
+      type:'error',
+      message:(error as Error).message
+    })
+  }
+    
 }
 
 //获取倒计时组件的false
 const getFlag=(isOrNo:boolean)=>{
-
+  
   btnShow.value =isOrNo
 }
 
@@ -125,12 +154,51 @@ let isPhone =computed(()=>{
     return reg.test(loginParams.phone)
 })
 
+
+const validatePass = (rule: any, value: any, callback: any) => {
+  let reg = /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
+  if(reg.test(value)){
+    callback()
+  }else{
+    callback(new Error('请输入正确的手机号码格式'))
+  }
+      
+}
+
+const validatePass2 = (rule: any, value: any, callback: any) => {
+
+  if(/^\d{6}$/.test(value)){
+    callback()
+  }else{
+    callback(new Error('请输入正确的验证码格式'))
+  }
+      
+}
+
+//表单验证
+const rules={
+  phone: [{ validator: validatePass, trigger: 'blur' }],
+  code: [{ validator: validatePass2, trigger: 'change' }],
+}
+
+//close关闭dialog按钮
+const close=()=>{
+  userStore.dialogFlag=false
+}
+
+
+
 import {
   User,
   Lock
 } from '@element-plus/icons-vue'
 </script>
 
+
+<script lang="ts">
+export default{
+  name:'login'
+}</script>
 <style lang="scss" scoped>
   .dialog1{
     :deep(.el-dialog__body){

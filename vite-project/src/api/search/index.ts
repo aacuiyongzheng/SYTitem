@@ -8,7 +8,9 @@ enum API{
      //获取科室数据
      HSOPTIALDEPARTMENT_URL='/hosp/hospital/department/',
      //获取验证码接口
-     HPSPTIALRCODE_URL='/sms/send/'
+     HPSPTIALRCODE_URL='/sms/send/',
+     //获取登录接口
+     USERLOGIN_URL='/user/login'
 
 
 
@@ -22,3 +24,6 @@ export const reqHospitalDepartment =(hoscode:string)=>request.get(API.HSOPTIALDE
 
 //获取验证码数据
 export const reqRcode =(phone:string)=>request.get(API.HPSPTIALRCODE_URL+phone)
+
+//用户登录接口
+export const reqUserLogin =(data:any)=>request.post(API.USERLOGIN_URL,data)

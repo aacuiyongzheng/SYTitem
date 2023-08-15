@@ -8,12 +8,13 @@
 
     <HosptialTottom/>
 
-    <Login/>
+    <Login v-if="userStore.dialogFlag"/>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import useUserStore from '@/store/modules/user.ts'
+let userStore=useUserStore()
 </script>
 
 <style scoped lang="scss">
