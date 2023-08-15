@@ -44,7 +44,7 @@ const querySearch = async(queryString: string, cb: any) => {
 
 //点击搜索框下拉菜单然后路由跳转详情页
 const handleSelect = (item: any) => {
-  $router.push({path:'hosptial'})
+  $router.push({path:'hosptial/register',query:{hoscode:item.hoscode}})
 }
 
 </script>  

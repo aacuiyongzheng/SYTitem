@@ -31,6 +31,8 @@
  </el-row>
 
 
+
+
 </template>
 
 <script setup lang="ts">
@@ -52,6 +54,8 @@ let hostype=ref<string>('')
 let districtCode=ref<string>('')
 onMounted(()=>{
     getHosptialInfo()
+    
+
 })
 
 //获取医院信息

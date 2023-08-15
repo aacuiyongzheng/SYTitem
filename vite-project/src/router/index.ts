@@ -9,7 +9,29 @@ export default createRouter({
   },
   {
    path:'/hosptial',
-   component:()=>import('@/pages/hosptial/index.vue')
+   component:()=>import('@/pages/hosptial/index.vue'),
+   children:[
+    {
+     path:'register',
+     component:()=>import('@/pages/hosptial/register/index.vue')
+    },
+    {
+     path:'detail',
+     component:()=>import('@/pages/hosptial/detail/index.vue')
+    },
+    {
+     path:'notice',
+     component:()=>import('@/pages/hosptial/notice/index.vue')
+    },
+    {
+     path:'close',
+     component:()=>import('@/pages/hosptial/close/index.vue')
+    },
+    {
+     path:'search',
+     component:()=>import('@/pages/hosptial/search/index.vue')
+    }
+   ]
   },
   {
    path:'/',
