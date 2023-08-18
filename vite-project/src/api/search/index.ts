@@ -14,7 +14,11 @@ enum API{
      //获取科室挂号信息
      HOSPTIALWORK_URL='/hosp/hospital/auth/getBookingScheduleRule/',
      //获取预约挂号医生信息
-     HOSPTIALWORKERINFO_URL='/hosp/hospital/auth/findScheduleList/'
+     HOSPTIALWORKERINFO_URL='/hosp/hospital/auth/findScheduleList/',
+     //获取就诊人信息请求
+     GETUSERINFO_URL='/user/patient/auth/findAll',
+     //获取挂号医生的数据
+     GETDOCTOR_URL='/hosp/hospital/getSchedule/'
 
 
 
@@ -37,3 +41,10 @@ export const reqHosptialWork =(page:number,limit:number,hoscode:string,depcode:s
 
 //获取预约挂号医生信息
 export const reqHosptialWorkInfo =(hoscode:string,depcode:string,workDate:string)=>request.get(API.HOSPTIALWORKERINFO_URL+`${hoscode}/${depcode}/${workDate}`)
+
+
+//获取就诊人信息接口
+export const reqUserInFO =()=>request.get(API.GETUSERINFO_URL)
+
+ //获取挂号医生的数据
+ export const reqDoctor =(scheduleId:string)=>request.get(API.GETDOCTOR_URL+`${scheduleId}`)
