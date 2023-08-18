@@ -1,8 +1,9 @@
 //pinia仓库写法:组合式API、选择式API
 import { defineStore } from "pinia";
-import { reqRcode,reqUserLogin } from "@/api/search";
+import { reqRcode,reqUserLogin} from "@/api/search";
 import {SET_TOKEN,GET_TOKEN,REOOVE_TOKEN} from '@/utils/localstorge'
 import { ElMessage } from 'element-plus'
+import { log } from "console";
 const useUserStore =defineStore('User',{
  state:():any=>{
   return {
@@ -45,7 +46,8 @@ const useUserStore =defineStore('User',{
         this.userInfo={name:'',token:''}
         REOOVE_TOKEN()
         
-    }
+    },
+
 
  },
  getters:{

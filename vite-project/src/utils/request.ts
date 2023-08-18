@@ -1,5 +1,7 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
+import useUserStore from '@/store/modules/user.ts'
+
 
 const  request =axios.create({
  baseURL:'/api',   //基础路径 根据服务器请求接口判断,是否带用
@@ -8,12 +10,16 @@ const  request =axios.create({
 
 //请求拦截器
 request.interceptors.request.use((config)=>{
-
+  let userStore=useUserStore()
  //config:请求拦截器回调注入的对象(配置对象),配置对象上最重要的一件事是headers属性
+  if(userStore.userInfo.token){
+    config.headers.token=userStore.userInfo.token
+  }
  //可以通过请求头携带公共参数
  return config;
 })
 
+//响应拦截器
 request.interceptors.response.use((response)=>{
 
 
