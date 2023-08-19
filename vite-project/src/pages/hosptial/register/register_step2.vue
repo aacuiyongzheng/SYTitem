@@ -99,7 +99,7 @@
 
 
        <div class="btn">
-        <el-button type="primary" :disabled="currentIndex==-1?true:false">确认挂号</el-button>
+        <el-button type="primary" :disabled="currentIndex!==-1?true:false" @click="submitOrder">确认挂号</el-button>
        </div>
 
       </div>
@@ -108,11 +108,13 @@
 
 <script setup lang="ts">
 import {reqUserInFO,reqDoctor} from '@/api/search/index'
+import {reqSubmitOrder} from '@/api/user/index'
 import {User} from '@element-plus/icons-vue'
 import Visitor from '@/pages/hosptial/register/visitor.vue'
 import { onMounted,ref } from 'vue';
-import {useRoute} from 'vue-router'
+import {useRoute,useRouter} from 'vue-router'
 let $route =useRoute()
+let $router =useRouter()
 let userArr=ref<any>([])
 let docArr=ref<any>({})
 let currentIndex=ref<number>(-1)
@@ -144,6 +146,18 @@ const getDoctorData=async()=>{
 //点击就诊人信息
 const changeIndex=(index:any)=>{
   currentIndex.value=index
+}
+
+//确认挂针
+const submitOrder=async()=>{
+  let hoscode =docArr.value.hoscode
+  let scheduleId =docArr.value.id
+  let patientId ="194"
+ let result =await  reqSubmitOrder(hoscode,scheduleId,patientId)
+    if(result.status==200){
+      $router.push({path:'/user/order',query:{orderId:result.data.data}})
+    }
+    
 }
 </script>
 
