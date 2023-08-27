@@ -24,7 +24,10 @@ enum API{
     //新增就诊人
     ADD_USER='/user/patient/auth/save',
     //修改就诊人
-    UPDATE_USER='/user/patient/auth/update'
+    UPDATE_USER='/user/patient/auth/update',
+    USERORDERINFO_URL = '/order/orderInfo/auth/',
+    //删除已有的就诊人
+    DELETEUSER_URL='/user/patient/auth/remove/'
     
 
 
@@ -69,3 +72,6 @@ export const reqAddOrUpdate=(data)=>{
         return request.post(API.ADD_USER,data)
     }
 }
+
+//删除某一个就诊人的信息
+export const reqRemoveUser = (id:number)=>request.delete<any,any>(API.DELETEUSER_URL+id)

@@ -11,6 +11,7 @@ import router from '@/router'
 import pinia from '@/store/index'
 //@ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import './permissstion'
 
 
 const app =createApp(App)

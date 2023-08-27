@@ -5,7 +5,10 @@ export default createRouter({
  routes:[
   {
    path:'/home',
-   component:()=>import('@/pages/home/index.vue')
+   component:()=>import('@/pages/home/index.vue'),
+   meta:{
+    title:'首页'
+   }
   },
   {
    path:'/hosptial',
@@ -13,31 +16,52 @@ export default createRouter({
    children:[
     {
      path:'register',
-     component:()=>import('@/pages/hosptial/register/index.vue')
+     component:()=>import('@/pages/hosptial/register/index.vue'),
+     meta:{
+      title:'预约挂号'
+     }
     },
     {
      path:'detail',
-     component:()=>import('@/pages/hosptial/detail/index.vue')
+     component:()=>import('@/pages/hosptial/detail/index.vue'),
+     meta:{
+      title:'预约详情'
+     }
     },
     {
      path:'notice',
-     component:()=>import('@/pages/hosptial/notice/index.vue')
+     component:()=>import('@/pages/hosptial/notice/index.vue'),
+     meta:{
+      title:'预约通知'
+     }
     },
     {
      path:'close',
-     component:()=>import('@/pages/hosptial/close/index.vue')
+     component:()=>import('@/pages/hosptial/close/index.vue'),
+     meta:{
+      title:'停诊信息'
+     }
     },
     {
      path:'search',
-     component:()=>import('@/pages/hosptial/search/index.vue')
+     component:()=>import('@/pages/hosptial/search/index.vue'),
+     meta:{
+      title:'查询与取消'
+     }
     },
     {
      path:'register_step1',
-     component:()=>import('@/pages/hosptial/register/register_step1.vue')
+     component:()=>import('@/pages/hosptial/register/register_step1.vue'),
+     meta:{
+      title:'预约第一步'
+     }
     },
     {
      path:'register_step2',
-     component:()=>import('@/pages/hosptial/register/register_step2.vue')
+     component:()=>import('@/pages/hosptial/register/register_step2.vue'),
+     meta:{
+      title:'预约第二步'
+     }
     }
    ]
   },
@@ -47,23 +71,38 @@ export default createRouter({
    children:[
     {
      path:'certification',
-     component:()=>import('@/pages/user/certification/index.vue')
+     component:()=>import('@/pages/user/certification/index.vue'),
+     meta:{
+      title:'实名认证'
+     }
     },
     {
      path:'order',
-     component:()=>import('@/pages/user/order/index.vue')
+     component:()=>import('@/pages/user/order/index.vue'),
+     meta:{
+      title:'挂号订单'
+     }
     },
     {
      path:'patient',
-     component:()=>import('@/pages/user/patient/index.vue')
+     component:()=>import('@/pages/user/patient/index.vue'),
+     meta:{
+      title:'就诊人管理'
+     }
     },
     {
      path:'profile',
-     component:()=>import('@/pages/user/profile/index.vue')
+     component:()=>import('@/pages/user/profile/index.vue'),
+     meta:{
+      title:'账号信息'
+     }
     },
     {
      path:'feedback',
-     component:()=>import('@/pages/user/feedback/index.vue')
+     component:()=>import('@/pages/user/feedback/index.vue'),
+     meta:{
+      title:'信息反馈'
+     }
     },
    ]
    

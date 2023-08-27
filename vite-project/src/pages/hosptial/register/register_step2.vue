@@ -9,7 +9,7 @@
     <template #header>
       <div class="card-header">
         <span>请选择确诊人</span>
-        <el-button class="button"  type="primary" :icon="User">添加就选人</el-button>
+        <el-button class="button"  type="primary" :icon="User" @click="add">添加就选人</el-button>
       </div>
     </template>
     
@@ -129,7 +129,7 @@ const getData=async()=>{
         let result =await reqUserInFO()
      if(result.status==200){
       userArr.value=result.data.data
-     }       
+     }    
 }
 
 //获取医生就诊信息
@@ -155,6 +155,11 @@ const submitOrder=async()=>{
       $router.push({path:'/user/order',query:{orderId:result.data.data}})
     }
     
+}
+
+//添加就诊人
+const add=()=>{
+  $router.push({path:'/user/patient',query:{type:'add'}})  
 }
 </script>
 
