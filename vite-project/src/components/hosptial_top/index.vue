@@ -18,9 +18,9 @@
     </span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>实名认证</el-dropdown-item>
-        <el-dropdown-item>挂号订单</el-dropdown-item>
-        <el-dropdown-item>就诊人管理</el-dropdown-item>
+        <el-dropdown-item @click="GoMenu('/user/certification')" >实名认证</el-dropdown-item>
+        <el-dropdown-item @click="GoMenu('/user/order')"> 挂号订单</el-dropdown-item>
+        <el-dropdown-item @click="GoMenu('/user/patient')">就诊人管理</el-dropdown-item>
         <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </template>
@@ -43,6 +43,11 @@ const goHome=()=>{
 
 const changeScrene=()=>{
    userStore.dialogFlag =true
+}
+
+//右上角下拉列表路由跳转
+const GoMenu=(path:string)=>{
+   $router.push({path:path})
 }
 
 //退出登录

@@ -22,8 +22,7 @@ const useDetailStore =defineStore('Detail',{
   //获取科室数据
   async getHosptialDepartment(hoscode:string){
     let result:any =await reqHospitalDepartment(hoscode)
-    if(result.status==200){
-      console.log(result);
+    if(result.status==200){      
       
       this.hosptialDepartmentInfo=result.data.data
 
