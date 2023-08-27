@@ -99,7 +99,7 @@
 
 
        <div class="btn">
-        <el-button type="primary" :disabled="currentIndex!==-1?true:false" @click="submitOrder">确认挂号</el-button>
+        <el-button type="primary" :disabled="currentIndex==-1?true:false" @click="submitOrder">确认挂号</el-button>
        </div>
 
       </div>
@@ -110,7 +110,6 @@
 import {reqUserInFO,reqDoctor} from '@/api/search/index'
 import {reqSubmitOrder} from '@/api/user/index'
 import {User} from '@element-plus/icons-vue'
-import Visitor from '@/pages/hosptial/register/visitor.vue'
 import { onMounted,ref } from 'vue';
 import {useRoute,useRouter} from 'vue-router'
 let $route =useRoute()
@@ -130,9 +129,7 @@ const getData=async()=>{
         let result =await reqUserInFO()
      if(result.status==200){
       userArr.value=result.data.data
-     }
-     
-        
+     }       
 }
 
 //获取医生就诊信息

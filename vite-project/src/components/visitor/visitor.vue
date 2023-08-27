@@ -6,7 +6,8 @@
         <p>{{user.name}}</p>
        </div>
         <div class="right">
-         <el-button  type="primary" circle  :icon="Edit"></el-button>
+         <el-button  type="primary" circle  :icon="Edit" @click="Editt"></el-button>
+         <el-button v-if="$route.path=='/user/patient'" type="danger" circle  :icon="Delete"></el-button>
         </div>
       </div>
       <div class="bottom">
@@ -27,8 +28,15 @@
 </template>
 
 <script setup lang="ts">
- import {Edit } from '@element-plus/icons-vue'
+ import {Edit,Delete } from '@element-plus/icons-vue'
+ import { useRoute } from 'vue-router';
 defineProps(['user','currentIndex','index'])
+let $emit =defineEmits(['changeScrene'])
+let $route =useRoute()
+
+const Editt=()=>{
+  $emit('changeScrene')
+}
 </script>
 
 <style lang="scss" scoped>

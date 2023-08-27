@@ -63,22 +63,26 @@
   </el-descriptions>
 
           <!-- 用户未验证 -->
-            <el-form v-else style="width: 60%; margin: 20px auto;" label-width="80">
-              <el-form-item label="用户姓名">
+            <el-form v-else style="width: 60%; margin: 20px auto;" label-width="80"
+            :rules="rules" 
+            :model="params"
+            ref="ruleFormRef"
+            >
+              <el-form-item label="用户姓名" prop="name">
                 <el-input  placeholder="请输入用户姓名" v-model="params.name"></el-input>
               </el-form-item>
 
-              <el-form-item label="证件类型">
+              <el-form-item label="证件类型" prop="certificatesType">
                 <el-select style="width: 100%;"  placeholder="请输入证件类型" v-model="params.certificatesType">
                   <el-option :label="item.name" :value="item.value" v-for="(item,index) in selectArr" :key="index"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="证件号码">
+              <el-form-item label="证件号码" prop="certificatesNo">
                 <el-input  placeholder="请输入证件号码" v-model="params.certificatesNo"></el-input>
               </el-form-item>
 
-              <el-form-item label="上传证件">
+              <el-form-item label="上传证件" prop="certificatesUrl" >
                 <el-upload
                 ref="upload"
                 :on-success="success"
@@ -125,6 +129,7 @@ let params =reactive<any>({
   name: ""
 })
 let dialogVisible = ref<boolean>(false)
+let ruleFormRef=ref()
 
 onMounted(()=>{
     getUserInfo()
@@ -150,8 +155,8 @@ const getSelectData= async()=>{
 
 //图片上传之后的钩子
 const success=(response: any)=>{
+  ruleFormRef.value.clearValidate('certificatesUrl')
   params.certificatesUrl=response.data
-    
 }
 
 //限制上传一张图片
@@ -190,7 +195,7 @@ const reset=()=>{
 
 //提交按钮
 const submit=async()=>{
-      
+      await ruleFormRef.value.validate()
     try {
       await UserConfirm(params)
       
@@ -205,6 +210,54 @@ const submit=async()=>{
     }
 
    
+}
+
+//用户名校验规则
+const validateName=(rule: any, value: any, callback: any)=>{
+  let reg = /^[\u4E00-\u9FA5]{2,10}(·[\u4E00-\u9FA5]{2,10}){0,2}$/;
+  if(reg.test(value)){
+    callback()
+  }else{
+    callback(new Error('请输入正确的用户名'))
+  }
+}
+
+//用户身份证号校验
+const validateType=(rule: any, value: any, callback: any)=>{
+  if(value=='10'||value=='20'){
+      callback()
+  }else
+  {
+    callback(new Error('请选择证件类型'))
+  }
+}
+
+//用户身份类型规则校验
+const validateNo=(rule: any, value: any, callback: any)=>{
+  let reg15 = /^[1-9]\d{5}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}$/;
+  let reg = /^[a-zA-Z0-9]{3,21}$/; 
+  if(reg15.test(value)||reg.test(value)){
+    callback()
+  }else{
+    callback(new Error('请选择正确的身份证或者户口本的号码'))
+  }
+}
+
+//用户上传图片表单验证规则
+const validateUrl=(rule: any, value: any, callback: any)=>{
+  if(value.length){
+    callback()
+  }else{
+    callback(new Error('请上传图片'))
+  }
+}
+
+//表单校验规则
+const rules = {
+  name: [{ validator: validateName, trigger: 'change',required: true  }],
+  certificatesNo: [{ validator: validateNo,required: true }],
+  certificatesType: [{ validator: validateType,required: true  }],
+  certificatesUrl: [{ validator: validateUrl,required: true  }],
 }
 
 </script>

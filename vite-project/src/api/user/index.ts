@@ -16,7 +16,15 @@ enum API{
     //下拉框选项
     SELECTDATA='/cmn/dict/findByDictCode/',
     //用户认证
-    USERCONFIRM='/user/auth/userAuah'
+    USERCONFIRM='/user/auth/userAuah',
+    //获取用户订单号的数据
+    USERORDERINFO='/order/orderInfo/auth/',
+    //级联选择器
+    CITY_URL='/cmn/dict/findByParentId/',
+    //新增就诊人
+    ADD_USER='/user/patient/auth/save',
+    //修改就诊人
+    UPDATE_USER='/user/patient/auth/update'
     
 
 
@@ -46,3 +54,18 @@ export const selectData =(dictCode='certificatesType')=>request.get(API.SELECTDA
 
 //用户认证
 export const UserConfirm =(data:any)=>request.post(API.USERCONFIRM,data)
+
+//获取用户订单数据
+export const reqUserOrderInfo = (page: number, limit: number) => request.get(API.USERORDERINFO + `${page}/${limit}`)
+
+//获取城市的数据
+export const reqCity=(parentId:string)=>request.get(API.CITY_URL+`${parentId}`)
+
+//新增或修改就诊人信息
+export const reqAddOrUpdate=(data)=>{
+    if(data.id){
+        return request.put(API.UPDATE_USER,data)
+    }else{
+        return request.post(API.ADD_USER,data)
+    }
+}
